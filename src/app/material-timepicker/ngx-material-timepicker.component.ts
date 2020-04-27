@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
 import { merge, Subject } from 'rxjs';
 import { NgxMaterialTimepickerEventService } from './services/ngx-material-timepicker-event.service';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -17,7 +17,15 @@ const ESCAPE = 27;
     selector: 'ngx-material-timepicker',
     template: '',
 })
-export class NgxMaterialTimepickerComponent implements TimepickerRef {
+export class NgxMaterialTimepickerComponent implements TimepickerRef, OnChanges, OnChanges {
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.hasOwnProperty('min')) {
+            this.min = changes.min.currentValue;
+        }
+        if (changes.hasOwnProperty('max')) {
+            this.min = changes.max.currentValue;
+        }
+    }
 
     timeUpdated = new Subject<string>();
 
